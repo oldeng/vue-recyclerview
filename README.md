@@ -2,35 +2,33 @@
 
 [![npm](https://img.shields.io/npm/v/vue-recyclerview.svg)](https://www.npmjs.com/package/vue-recyclerview)
 
-Mastering Large Lists with the vue-recyclerview
 
-## Feature
+## 特性
 
-- DOM recyleing
-- Multiple column
-- Waterflow
+- 复用DOM
+- 多行
 
-## Preview
+## 预览
 
 ![](https://hilongjw.github.io/vue-recyclerview/preview3.gif)
 
-## Demo
+## 实例预览
 
 [https://hilongjw.github.io/vue-recyclerview/](https://hilongjw.github.io/vue-recyclerview/)
 
-## Requirements
+## 运行环境
 
 Vue 2.0 +
 
-## Installation
+## 安装
 
-### Direct Download / CDN
+### 使用CDN
 
 https://unpkg.com/vue-recyclerview/dist/vue-recyclerview
 
-[unpkg.com](https://unpkg.com) provides NPM-based CDN links. The above link will always point to the latest release on NPM. You can also use a specific version/tag via URLs like https://unpkg.com/vue-recyclerview/dist/vue-recyclerview.js
+[unpkg.com](https://unpkg.com) unpkg地址 https://unpkg.com/vue-recyclerview/dist/vue-recyclerview.js
  
-Include vue-recyclerview after Vue and it will install itself automatically:
+在你的HTML中引用下面文件
 
 ```html
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -43,7 +41,7 @@ Include vue-recyclerview after Vue and it will install itself automatically:
     $ npm install vue-recyclerview
 ```
 
-When used with a module system, you must explicitly install the `vue-recyclerview` via `Vue.use()`:
+在你的代码中安装插件 `vue-recyclerview` via `Vue.use()`:
 
 ```javascript
 import Vue from 'vue'
@@ -52,22 +50,14 @@ import VueRecyclerviewNew from 'vue-recyclerview'
 Vue.use(VueRecyclerviewNew)
 ```
 
-You don't need to do this when using global script tags.
+### 编译
+```
+开发中....
+```
 
-### Dev Build
+## 说明
 
-You will have to clone directly from GitHub and build `vue-recyclerview` yourself if
-you want to use the latest dev build.
-
-    $ git clone git@github.com:hilongjw/vue-recyclerview.git node_modules/vue-recyclerview
-    $ cd node_modules/vue-recyclerview
-    $ npm install
-    $ npm run build
-
-
-## Getting Started
-
-> We will be using [ES2015](https://github.com/lukehoban/es6features) in the code samples in the guide.
+> 。。。
 
 ### main.js
 
@@ -117,9 +107,7 @@ export default {
 </script>
 ```
 
-[Full example code](https://github.com/hilongjw/vue-recyclerview/blob/master/examples/component)
-
-## Props Options
+## 属性
 
 |key|description|defualt|type/options|
 |:---|---|---|---|
