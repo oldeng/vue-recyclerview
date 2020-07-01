@@ -28,7 +28,7 @@ const MAX_COUNT = Infinity
  * @param {InfiniteScrollerSource} source A provider of the content to be
  *     displayed in the infinite scroll region.
  */
-export default function InfiniteScroller (scroller, source, options) {
+export default function InfiniteScroller(scroller, source, options) {
   // Number of items to instantiate beyond current view in the opposite direction.
   this.RUNWAY_ITEMS = options.prerender
   // Number of items to instantiate beyond current view in the opposite direction.
@@ -74,7 +74,7 @@ export default function InfiniteScroller (scroller, source, options) {
   this.scroller_.addEventListener('scroll', this.onScroll_.bind(this))
   window.addEventListener('resize', this.onResize_.bind(this))
   window.addEventListener('orientationchange', this.onResize_.bind(this))
-  
+
   // Create an element to force the scroller to allow scrolling to a certain
   // point.
   // this.scrollRunway_ = document.createElement('div')
@@ -98,7 +98,7 @@ InfiniteScroller.prototype = {
    * Called when the browser window resizes to adapt to new scroller bounds and
    * layout sizes of items within the scroller.
    */
-  onResize_ () {
+  onResize_() {
     // TODO: If we already have tombstones attached to the document, it would
     // probably be more efficient to use one of them rather than create a new
     // one to measure.
@@ -125,7 +125,7 @@ InfiniteScroller.prototype = {
    * from the source if we've scrolled past the end of the currently available
    * content.
    */
-  onScroll_ () {
+  onScroll_() {
     const delta = this.scroller_.scrollTop - this.anchorScrollTop
 
     if (this.scroller_.scrollTop == 0) {
@@ -157,7 +157,7 @@ InfiniteScroller.prototype = {
    * @return {{index: number, offset: number}} Returns the new item and offset
    *     scroll should be anchored to.
    */
-  calculateAnchoredItem (initialAnchor, delta) {
+  calculateAnchoredItem(initialAnchor, delta) {
     if (delta === 0) return initialAnchor
     delta += initialAnchor.offset
     var i = initialAnchor.index
@@ -186,7 +186,7 @@ InfiniteScroller.prototype = {
     }
   },
 
-  setStyle (el, key, val) {
+  setStyle(el, key, val) {
     setStyle(el, key, val, this.options.usePrefix)
   },
 
@@ -195,7 +195,7 @@ InfiniteScroller.prototype = {
    * @param {number} start The first item which should be attached.
    * @param {number} end One past the last item which should be attached.
    */
-  fill (start, end) {
+  fill(start, end) {
     this.firstAttachedItem_ = Math.max(0, start)
     this.lastAttachedItem_ = end
     this.attachContent()
@@ -205,7 +205,7 @@ InfiniteScroller.prototype = {
    * Creates or returns an existing tombstone ready to be reused.
    * @return {Element} A tombstone element ready to be used.
    */
-  getTombstone () {
+  getTombstone() {
     const tombstone = this.tombstones_.pop()
     if (tombstone) {
       tombstone.classList.remove(this.INVISIBLE_CLASS)
@@ -217,14 +217,14 @@ InfiniteScroller.prototype = {
     return this.source_.createTombstone(this.baseNode.cloneNode(true))
   },
 
-  layoutInView (i) {
+  layoutInView(i) {
     const top = this.posList.get(Math.floor(i / this.column), i % this.column)
     if (!top) return true
     const index = top - this.anchorScrollTop
     return (index > -window.innerHeight * .5 && index < window.innerHeight)
   },
 
-  getUnUsedNodes (clearAll) {
+  getUnUsedNodes(clearAll) {
     if (this.waterflow) {
       for (let i = 0, len = this.items_.length; i < len; i++) {
         if (this.items_[i].node && (clearAll || !this.layoutInView(i))) {
@@ -255,7 +255,7 @@ InfiniteScroller.prototype = {
     }
   },
 
-  clearItem (item) {
+  clearItem(item) {
     if (this.options.reuseVM) {
       this.scroller_.removeChild(item.node)
       this.source_.free(item.data)
@@ -267,10 +267,10 @@ InfiniteScroller.prototype = {
       if (item.node) {
         this.unusedNodes.push(item.node)
       }
-    }    
+    }
   },
 
-  clearTombstone (item) {
+  clearTombstone(item) {
     if (item.node) {
       if (item.node.classList.contains(this.TOMBSTONE_CLASS)) {
         this.tombstones_.push(item.node)
@@ -281,13 +281,13 @@ InfiniteScroller.prototype = {
     }
   },
 
-  clearUnUsedNodes () {
+  clearUnUsedNodes() {
     while (this.unusedNodes.length) {
       this.scroller_.removeChild(this.unusedNodes.pop())
     }
   },
 
-  getNodePosition () {
+  getNodePosition() {
     // Fix scroll position in case we have realized the heights of elements
     // that we didn't used to know.
     // TODO: We should only need to do this when a height of an item becomes
@@ -310,7 +310,7 @@ InfiniteScroller.prototype = {
     }
   },
 
-  initPosList () {
+  initPosList() {
     let data = {}
     for (let i = 0, len = this.column; i < len; i++) {
       data[i] = this.curPos
@@ -320,7 +320,7 @@ InfiniteScroller.prototype = {
       data: {
         0: data
       },
-      get (row, col) {
+      get(row, col) {
         if (!this.data[row]) {
           let data = {}
           for (let i = 0, len = this.column; i < len; i++) {
@@ -331,13 +331,13 @@ InfiniteScroller.prototype = {
         if (col === undefined) return this.data[row]
         return this.data[row][col]
       },
-      set (row, col, val) {
+      set(row, col, val) {
         this.get(row)[col] = val
       }
     }
   },
 
-  tombstoneLayout (tombstoneAnimations) {
+  tombstoneLayout(tombstoneAnimations) {
     let i
     let anim
     let x
@@ -352,7 +352,7 @@ InfiniteScroller.prototype = {
     }
   },
 
-  itemLayout (tombstoneAnimations) {
+  itemLayout(tombstoneAnimations) {
     let i
     let anim
     let x = 0
@@ -376,10 +376,10 @@ InfiniteScroller.prototype = {
       }
       if (this.items_[i].node && this.curPos !== this.items_[i].top) {
         if (!anim) this.setStyle(this.items_[i].node, 'transition', '')
-        this.setStyle(this.items_[i].node, 'transform', 'translate3d('+ x + 'px,' + y + 'px, 0)')
+        this.setStyle(this.items_[i].node, 'transform', 'translate3d(' + x + 'px,' + y + 'px, 0)')
       }
       this.items_[i].top = y
-      
+
       if ((i + 1) % this.column === 0) {
         this.curPos += (this.items_[i].height || this.tombstoneSize_) * this.column
       }
@@ -389,12 +389,12 @@ InfiniteScroller.prototype = {
     }
   },
 
-  setAnimatePosition (tombstoneAnimations) {
+  setAnimatePosition(tombstoneAnimations) {
     this.tombstoneLayout(tombstoneAnimations)
     this.itemLayout(tombstoneAnimations)
   },
 
-  renderItems () {
+  renderItems() {
     let tombstoneAnimations = {}
     let node
     let newNodes = []
@@ -413,7 +413,7 @@ InfiniteScroller.prototype = {
       if (this.items_[i].node) {
         // if it's a tombstone but we have data, replace it.
         if (this.items_[i].node.classList.contains(this.TOMBSTONE_CLASS) &&
-            this.items_[i].data) {
+          this.items_[i].data) {
           // TODO: Probably best to move items on top of tombstones and fade them in instead.
           if (this.ANIMATION_DURATION_MS) {
             this.items_[i].node.style.zIndex = 1;
@@ -463,7 +463,7 @@ InfiniteScroller.prototype = {
     return tombstoneAnimations
   },
 
-  cacheItemHeight (force) {
+  cacheItemHeight(force) {
     let rect = {}
     for (let i = this.firstAttachedItem_; i < this.lastAttachedItem_; i++) {
       // cacheItemsHeight
@@ -485,7 +485,7 @@ InfiniteScroller.prototype = {
    * Attaches content to the scroller and updates the scroll position if
    * necessary.
    */
-  attachContent () {
+  attachContent() {
     this.getUnUsedNodes()
 
     let tombstoneAnimations = this.renderItems()
@@ -510,24 +510,24 @@ InfiniteScroller.prototype = {
     this.maybeRequestContent()
   },
 
-  setItems (list) {
+  setItems(list) {
     list = list || []
     this.items_ = list
     this.MAX_COUNT = list.length
   },
 
-  scrollToIndex (index) {
+  scrollToIndex(index) {
     const commonItemCount = this.lastAttachedItem_ - this.firstAttachedItem_
     this.fill(index - commonItemCount, index + 1)
   },
 
-  setScrollRunway () {
+  setScrollRunway() {
     this.scrollRunwayEnd_ = Math.max(this.scrollRunwayEnd_, this.curPos + this.SCROLL_RUNWAY)
     this.setStyle(this.scrollRunway_, 'transform', 'translate(0, ' + this.scrollRunwayEnd_ + 'px)')
     this.scroller_.scrollTop = this.anchorScrollTop
   },
 
-  tombstoneAnimation (tombstoneAnimations) {
+  tombstoneAnimation(tombstoneAnimations) {
     let anim
     for (var i in tombstoneAnimations) {
       anim = tombstoneAnimations[i]
@@ -540,7 +540,7 @@ InfiniteScroller.prototype = {
   /**
    * Requests additional content if we don't have enough currently.
    */
-  maybeRequestContent () {
+  maybeRequestContent() {
     // Don't issue another request if one is already in progress as we don't
     // know where to start the next request yet.
     if (this.requestInProgress_) return
@@ -557,7 +557,7 @@ InfiniteScroller.prototype = {
   /**
    * Adds an item to the items list.
    */
-  addItem_ () {
+  addItem_() {
     this.items_.push({
       vm: null,
       data: null,
@@ -574,7 +574,7 @@ InfiniteScroller.prototype = {
    * @param {Array<Object>} items The array of items to be added to the infinite
    *     scroller list.
    */
-  addContent (items) {
+  addContent(items) {
     if (!items.length) return
     this.requestInProgress_ = false
 
@@ -592,7 +592,7 @@ InfiniteScroller.prototype = {
     this.attachContent()
   },
 
-  clear () {
+  clear() {
     this.loadedItems_ = 0
     this.requestInProgress_ = false
 
@@ -607,7 +607,7 @@ InfiniteScroller.prototype = {
     this.onResize_()
   },
 
-  destroy () {
+  destroy() {
     this.scroller_.removeEventListener('scroll', this.onScroll_)
     window.removeEventListener('resize', this.onResize_)
     window.removeEventListener('orientationchange', this.onResize_)

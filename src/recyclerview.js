@@ -6,10 +6,10 @@ import {
   preventDefaultException,
   assign,
   setStyle
- } from './util'
+} from './util'
 
 const Loading = {
-  render (h) {
+  render(h) {
     return h('div', {
       attrs: {
         class: 'recyclerview-loading'
@@ -19,7 +19,7 @@ const Loading = {
 }
 
 const Tombstone = {
-  render (h) {
+  render(h) {
     return h('div', {
       attrs: {
         class: 'recyclerview-item tombstone'
@@ -72,7 +72,7 @@ export default (Vue) => {
         default: 'div'
       }
     },
-    render (h) {
+    render(h) {
       return h(this.tag, {
         attrs: {
           class: 'recyclerview-container'
@@ -95,7 +95,7 @@ export default (Vue) => {
         })]
       )
     },
-    data () {
+    data() {
       return {
         startPointer: {
           x: 0,
@@ -109,15 +109,15 @@ export default (Vue) => {
         _scroller: null
       }
     },
-    mounted () {
+    mounted() {
       this.init()
     },
-    beforeDestroy () {
+    beforeDestroy() {
       this._scroller.destroy()
       this._scroller = null
     },
     methods: {
-      init () {
+      init() {
         this._options = assign({}, options, {
           prerender: this.prerender || options.prerender,
           remain: this.remain || options.remain,
@@ -140,7 +140,7 @@ export default (Vue) => {
         )
         this.$emit('inited')
       },
-      scrollToIndex (index) {
+      scrollToIndex(index) {
         if (this.waterflow) {
           for (let i = 0, len = this._scroller.items_.length; i < len; i++) {
             if (i === index) {
@@ -155,17 +155,17 @@ export default (Vue) => {
           this._scrollToBottom()
         })
       },
-      _scrollTo (top) {
+      _scrollTo(top) {
         top = top || 0
         this.$list.scrollTop = Number(top)
       },
-      _scrollToBottom () {
+      _scrollToBottom() {
         this._scrollTo(this.$list.scrollHeight)
       },
-      _renderListStyle () {
+      _renderListStyle() {
         setStyle(this.$list, 'transform', 'translate3d(0, ' + this.distance + 'px, 0)', this.options.usePrefix)
       },
-      _start (e) {
+      _start(e) {
         if (this.$list.scrollTop > 0) return
         this.pulling = true
         this.startPointer = getEventPosition(e)
@@ -174,7 +174,7 @@ export default (Vue) => {
           e.preventDefault()
         }
       },
-      _move (e) {
+      _move(e) {
         if (!this.pulling) return
         const pointer = getEventPosition(e)
         const distance = pointer.y - this.startPointer.y
@@ -194,7 +194,7 @@ export default (Vue) => {
         }
         requestAnimationFrame(this._renderListStyle.bind(this))
       },
-      _end (e) {
+      _end(e) {
         if (!this.pulling) return
         if (this.preventDefault && !preventDefaultException(e.target, this._options.preventDefaultException)) {
           e.preventDefault()

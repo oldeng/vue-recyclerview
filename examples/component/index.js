@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import RecyclerView from 'vue-recyclerview'
+import RecyclerView from '../../src/index'
 
 Vue.config.productionTip = false
 

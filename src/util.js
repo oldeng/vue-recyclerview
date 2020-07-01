@@ -6,7 +6,7 @@ const defaultPosition = {
 const mouseEvent = /mouse(down|move|up)/
 const touchEvent = /touch(start|move|end)/
 
-export function getEventPosition (e) {
+export function getEventPosition(e) {
   if (!e) return defaultPosition
   if (touchEvent.test(e.type)) {
     let touch = e.touches[0]
@@ -32,7 +32,7 @@ export const requestAnimationFrame = window.requestAnimationFrame ||
     window.setTimeout(callback, 1000 / 60)
   }
 
-export function preventDefaultException (el, exceptions) {
+export function preventDefaultException(el, exceptions) {
   for (let i in exceptions) {
     if (exceptions[i].test(el[i])) {
       return true
@@ -41,7 +41,7 @@ export function preventDefaultException (el, exceptions) {
   return false
 }
 
-export function assign (target, varArgs) { // .length of function is 2
+export function assign(target, varArgs) { // .length of function is 2
   if (target == null) { // TypeError if undefined or null
     throw new TypeError('Cannot convert undefined or null to object')
   }
@@ -65,14 +65,14 @@ export function assign (target, varArgs) { // .length of function is 2
 
 const prefixs = ['ms', 'Moz', 'Webkit', 'O']
 const prefixCache = {}
-function getPrefix (_key) {
+function getPrefix(_key) {
   if (prefixCache[_key]) return prefixCache[_key]
   const key = _key[0].toUpperCase() + _key.slice(1, _key.length)
   prefixCache[_key] = prefixs.map(p => p + key)
   return prefixCache[_key]
 }
 
-export function setStyle (el, key, value, usePrefix) {
+export function setStyle(el, key, value, usePrefix) {
   el.style[key] = value
   if (!usePrefix) return
   const keys = getPrefix(key)
@@ -81,15 +81,15 @@ export function setStyle (el, key, value, usePrefix) {
   })
 }
 
-export function inView (el, preLoad = 1) {
+export function inView(el, preLoad = 1) {
   const rect = el.getBoundingClientRect()
   return rect.top < window.innerHeight * preLoad &&
-  rect.bottom > 0 &&
-  rect.left < window.innerWidth * preLoad &&
-  rect.right > 0
+    rect.bottom > 0 &&
+    rect.left < window.innerWidth * preLoad &&
+    rect.right > 0
 }
 
-export function find (arr, handler) {
+export function find(arr, handler) {
   for (let i = 0, len = arr.length; i < len; i++) {
     if (handler(arr[i], i)) {
       return arr[i]

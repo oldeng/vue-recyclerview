@@ -1,4 +1,4 @@
-import './polyfill'
+// import './polyfill'
 import RecyclerView from './recyclerview'
 import './recyclerview.css'
 
